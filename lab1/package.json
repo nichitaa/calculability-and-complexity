@@ -1,7 +1,6 @@
 {
   "name": "lab1",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index"
@@ -11,5 +10,8 @@
   "dependencies": {
     "chart.js": "^2.9.4",
     "nodeplotlib": "^0.7.3"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
 }
