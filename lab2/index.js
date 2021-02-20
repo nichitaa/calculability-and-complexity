@@ -96,9 +96,10 @@ const maxHeap = (arr, i, l) => {
 		max = right;
 	}
 	
+	// change the root if needed
 	if ( max !== i ) {
 		swap(arr, i, max);
-		maxHeap(arr, max, l);
+		maxHeap(arr, max, l); // heapify the root
 	}
 };
 
@@ -112,10 +113,12 @@ const heapSort = arr => {
 	const arrCopy = [...arr];
 	let l = arrCopy.length;
 	
+	// construct max heap
 	for ( let i = Math.floor(l / 2); i >= 0; i -= 1 ) {
 		maxHeap(arrCopy, i, l);
 	}
 	
+	// One by one extract elements
 	for ( let i = arrCopy.length - 1; i > 0; i-- ) {
 		swap(arrCopy, 0, i); // swap the sorted element from heap with last one
 		l--;
@@ -136,7 +139,7 @@ I made a copy of original array to work with and return it
 and just not to mutate it, but it can be done without it
 and mutate original array.
 
-In many cases cases, k is O(n) the number of items to be sorted is not asymptotically
+In many cases, k is O(n) the number of items to be sorted is not asymptotically
 different than the number of values those items can take on.
 Because of this, counting sort is often said to be O(n)O(n) time and space.
 
@@ -244,6 +247,6 @@ const run = (n) => {
 const n = [100, 500, 1000, 5000, 10000, 50000, 100000];
 const bn = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]
 
-run(bn);
+run(n);
 
 
