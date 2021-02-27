@@ -14,13 +14,19 @@
 
 ![image](https://user-images.githubusercontent.com/57563506/108593076-48d42880-737a-11eb-8a19-8b9a5d9937e0.png)
 
-`To run the program: `
+####  **Lab 3 Empirical analysis of algorithms for obtaining Eratosthenes Sieve.**
 
-1. `open project (specific lab work)`
-2. `run npm i / yarn install`
-3. `run script npm start / yarn start (it will run node index)`
-4. `in console can be seen data for plot (execution time)`
-5. `the program should open a browser window with the plot for above data`
+> (27.02.21)
 
- 
+*Plot example (more detailed description available in report!)*
 
+![image](https://user-images.githubusercontent.com/57563506/109389423-35463600-7915-11eb-8da4-e36e5655bda4.png)
+
+`To run the programs: `
+
+1. `open root directory `
+2. `cd into specific lab work`
+3. `run npm i / yarn install`
+4. `run script npm start / yarn start (it will run node index)`
+5. `in console can be seen data for plot (execution time)`
+6. `the program should open a browser window with the plot for above data`

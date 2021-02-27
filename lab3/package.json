@@ -1,0 +1,16 @@
+{
+  "name": "lab3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "<pasecinic_nichita>",
+  "license": "ISC",
+  "dependencies": {
+    "nodeplotlib": "^0.7.3",
+    "xlsx": "^0.16.9"
+  }
+}
