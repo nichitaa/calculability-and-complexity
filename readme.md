@@ -22,6 +22,14 @@
 
 ![image](https://user-images.githubusercontent.com/57563506/109389423-35463600-7915-11eb-8da4-e36e5655bda4.png)
 
+####  **Lab 4 Empirical analysis of Depth First Search and Breadth First Search algorithms.**
+
+> (25.03.21)
+
+*Plot example (more detailed description available in report!)*
+
+![image](https://user-images.githubusercontent.com/57563506/112725843-eb0ba100-8f22-11eb-9c48-e55d7d1fcdb5.png)
+
 `To run the programs: `
 
 1. `open root directory `

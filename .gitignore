@@ -1,8 +1,11 @@
+.idea
 lab1/.idea
 lab1/node_modules
 lab1/yarn.lock
-.idea
 lab2/node_modules
 lab2/yarn.lock
 lab3/yarn.lock
 lab3/node_modules
+lab4/node_modules
+lab4/yarn.lock
+lab4/.idea
