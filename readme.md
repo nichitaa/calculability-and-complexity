@@ -41,7 +41,7 @@ Calculus Formulas:
 
 ![image](https://user-images.githubusercontent.com/57563506/113474823-f4dd5900-947a-11eb-86bc-ac51d8897a94.png)
 
-![image-20210403124958622](C:\Users\Win10Pro\AppData\Roaming\Typora\typora-user-images\image-20210403124958622.png)
+![image](https://user-images.githubusercontent.com/57563506/113478534-08e08500-9492-11eb-8e40-87c3261b8c84.png)
 
 *Plot example (more plots and more detailed description available in report!)*
 
