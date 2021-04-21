@@ -47,6 +47,19 @@ Calculus Formulas:
 
 ![image](https://user-images.githubusercontent.com/57563506/113478355-0b8eaa80-9491-11eb-8526-7d8cea06e03c.png)
 
+#### **Lab 6 Kruskal's and Prim's algorithm**
+
+> (04.08.21)
+
+- [Kruskal](https://ro.wikipedia.org/wiki/Algoritmul_lui_Kruskal)
+- [Prim](https://en.wikipedia.org/wiki/Prim%27s_algorithm)
+
+*Plot example (more plots and more detailed description available in report!)*
+
+![image](https://user-images.githubusercontent.com/57563506/115604264-d7691580-a2e9-11eb-98c1-720ed8098c67.png)
+
+
+
 `To run the programs: `
 
 1. `open root directory `
