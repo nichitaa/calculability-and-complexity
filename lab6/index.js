@@ -6,6 +6,7 @@
  * */
 
 const { performance } = require('perf_hooks');
+const { plot } = require('nodeplotlib');
 
 class Edge {
     constructor(v1, v2, w) {
@@ -114,20 +115,18 @@ class Graph {
     **/
 
     getNextEdge(visited, visitedBool, sortedEdges) {
-        for(let i = 0; i < visited.length; i++) {
-            for(let j = 0; j < sortedEdges.length; j++) {
-                let edge = sortedEdges[j]
-                // only if the edge was not visited yet (not added to result)
-                if(!visitedBool[j]) {
-                    if(!visited.includes(edge.v1) && visited.includes(edge.v2)) {
-                        // console.log({return1: edge})
-                        // return the cortege of [edge tb added, edge idx, new vertex tb included in visited]
-                        return [edge, j, edge.v1];
-                    }
-                    if(visited.includes(edge.v1) && !visited.includes(edge.v2)) {
-                        // console.log({return1: edge})
-                        return [edge, j, edge.v2];
-                    }
+        for(let j = 0; j < sortedEdges.length; j++) {
+            let edge = sortedEdges[j]
+            // only if the edge was not visited yet (not added to result)
+            if(!visitedBool[j]) {
+                if(!visited.includes(edge.v1) && visited.includes(edge.v2)) {
+                    // console.log({return1: edge})
+                    // return the cortege of [edge tb added, edge idx, new vertex tb included in visited]
+                    return [edge, j, edge.v1];
+                }
+                if(visited.includes(edge.v1) && !visited.includes(edge.v2)) {
+                    // console.log({return1: edge})
+                    return [edge, j, edge.v2];
                 }
             }
         }
@@ -181,8 +180,79 @@ class Graph {
 
 }
 
-const g = new Graph();
+/**
+ * Same util function to make a random connected graph [from lab4]
+ */
+const randomNumber = (min = 10, max = 100000) => {
+    return Math.floor(Math.random() * (max - min) + min);
+}
 
+const makeGraph = (nrOfVertices = 10, nrOfAdditionalConnections = 10, max = nrOfVertices, min = 0) => {
+    const vertices = [];
+    const edges = [];
+    const g = new Graph();
+    for (let i = 0; i <= nrOfVertices; i++) vertices.push(i.toString());
+
+    // make a path
+    for (let i = 0; i < vertices.length - 1; i++) {
+        g.addEdge(new Edge(vertices[i], vertices[i + 1], randomNumber()));
+        edges.push([vertices[i], vertices[i + 1]]);
+    }
+    const edgeExists = (u, v) => {
+        for (let i = 0; i < edges.length; i++) {
+            if (edges[i][0] === u && edges[i][1] === v) return true;
+        }
+        return false;
+    };
+    while (nrOfAdditionalConnections !== 0) {
+        const u = vertices[Math.floor(Math.random() * vertices.length)];
+        const v = vertices[Math.floor(Math.random() * vertices.length)];
+        if (edges.length === 0) {
+            g.addEdge(new Edge(u, v, randomNumber()));
+            edges.push([u, v]);
+            nrOfAdditionalConnections--;
+        } else {
+            if (!edgeExists(u, v)) {
+                g.addEdge(new Edge(u, v, randomNumber()));
+                edges.push([u, v]);
+                nrOfAdditionalConnections--;
+            }
+        }
+    }
+    const primTime = g.primExecTime();
+    const kruskalTime = g.kruskalExecTime();
+    return { kruskalTime, primTime };
+};
+
+
+const run = (vs, es) => {
+    const kruskalPerf = [];
+    const primPerf = [];
+    for (let i = 0; i < vs.length; i++) {
+        const { kruskalTime, primTime } = makeGraph(vs[i], es[i]);
+        console.log('\n********************');
+        console.log('running for: ', vs[i], 'edges: ', es[i]);
+        console.log({vertices: vs[i], edges: es[i]})
+        kruskalPerf.push(kruskalTime);
+        primPerf.push(primTime);
+        console.log('kruskal time: ', kruskalTime);
+        console.log('prim time: ', primTime);
+        console.log('********************');
+    }
+
+    const kruskalPlot = { x: vs, y: kruskalPerf, type: 'line', name: 'kruskal execution time' };
+    const primPlot = { x: vs, y: primPerf, type: 'line', name: 'prim execution time' };
+    plot([kruskalPlot, primPlot]);
+};
+
+
+const nrOfVertices = [10, 50, 100, 500, 1000, 2000, 3000];
+const nrOfAdditionalConnections = [10, 50, 100, 1000, 5000, 20000, 20000];
+run(nrOfVertices, nrOfAdditionalConnections);
+
+// const g = new Graph();
+
+// one test case
 // g.addEdge(new Edge('A', 'B', 2));
 // g.addEdge(new Edge('A', 'C', 3));
 // g.addEdge(new Edge('A', 'D', 4));
@@ -193,26 +263,30 @@ const g = new Graph();
 // g.addEdge(new Edge('D', 'E', 2));
 
 
-g.addEdge(new Edge('A', 'B', 2));
-g.addEdge(new Edge('A', 'C', 3));
-g.addEdge(new Edge('A', 'D', 3));
+// another test case
+// g.addEdge(new Edge('A', 'B', 2));
+// g.addEdge(new Edge('A', 'C', 3));
+// g.addEdge(new Edge('A', 'D', 3));
+//
+// g.addEdge(new Edge('B', 'C', 4));
+// g.addEdge(new Edge('B', 'E', 3));
+//
+// g.addEdge(new Edge('C', 'D', 5));
+// g.addEdge(new Edge('C', 'F', 6));
+// g.addEdge(new Edge('C', 'E', 1));
+//
+// g.addEdge(new Edge('E', 'F', 8));
+//
+// g.addEdge(new Edge('D', 'F', 7));
+//
+// g.addEdge(new Edge('F', 'G', 9));
 
-g.addEdge(new Edge('B', 'C', 4));
-g.addEdge(new Edge('B', 'E', 3));
 
-g.addEdge(new Edge('C', 'D', 5));
-g.addEdge(new Edge('C', 'F', 6));
-g.addEdge(new Edge('C', 'E', 1));
-
-g.addEdge(new Edge('E', 'F', 8));
-
-g.addEdge(new Edge('D', 'F', 7));
-
-g.addEdge(new Edge('F', 'G', 9));
-
-
-console.log('kruskal: ' + g.kruskalExecTime());
-console.log('prim: ' + g.primExecTime());
+// console.log('kruskal: ' + g.kruskalExecTime());
+// console.log('prim: ' + g.primExecTime());
+//
+// g.kruskal();
+// g.prim();
 
 // console.log({Edges: g.edges});
 // console.log({Nodes: g.nodes});

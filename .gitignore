@@ -12,3 +12,5 @@ lab4/.idea
 lab5/.idea
 lab5/node_modules
 lab5/yarn.lock
+lab6/node_modules
+lab6/package-lock.json
