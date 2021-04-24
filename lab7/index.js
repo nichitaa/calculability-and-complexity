@@ -1,5 +1,5 @@
 /**
- * Lab 6 - Kruskal and Prim algorithms
+ * Lab 7 - Floyd and Dijkstra Algorithms
  * FAF 192
  * Author - Pasecinic Nichita
  * 04.26.2021
