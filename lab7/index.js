@@ -8,10 +8,17 @@ const { performance } = require('perf_hooks');
 const { plot } = require('nodeplotlib');
 
 class Edge {
-    constructor(v1, v2, w) {
-        this.v1 = v1;
-        this.v2 = v2;
-        this.w = w;
+    constructor(v1, v2, w, floydFlag) {
+        if(floydFlag) {
+            this.v1 = parseInt(v1);
+            this.v2 = parseInt(v2);
+            this.w = parseInt(w);
+        } else {
+            this.v1 = v1;
+            this.v2 = v2;
+            this.w = w;
+        }
+
     }
 }
 
@@ -21,7 +28,8 @@ class Graph {
         this.edges = [];
     }
 
-    addNode(node) {
+    addNode(node, floydFlag) {
+        if(floydFlag) node = parseInt(node)
         if (!this.nodes.includes(node)) {
             this.nodes.push(node);
         }
@@ -186,21 +194,108 @@ class Graph {
     //#endregion
 }
 
-let g = new Graph();
+
+/**
+ * Same util function to make a random connected graph [from lab4]
+ */
+const randomNumber = (min = 10, max = 100000) => {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+const makeGraph = (nrOfVertices = 10, nrOfAdditionalConnections = 10, max = nrOfVertices, min = 0) => {
+    const vertices = [];
+    const edges = [];
+
+    const gDijkstra = new Graph();
+    const gFloyd = new Graph()
+
+    for (let i = 0; i <= nrOfVertices; i++) {
+        vertices.push(i.toString());
+        gDijkstra.addNode(i.toString(), false);
+        gFloyd.addNode(i, true);
+    }
+
+    // make a path
+    for (let i = 0; i < vertices.length - 1; i++) {
+        gDijkstra.addEdge(new Edge(vertices[i], vertices[i + 1], randomNumber(), false));
+        gFloyd.addEdge(new Edge(vertices[i], vertices[i + 1], randomNumber(), true));
+        edges.push([vertices[i], vertices[i + 1]]);
+    }
+    const edgeExists = (u, v) => {
+        for (let i = 0; i < edges.length; i++) {
+            if (edges[i][0] === u && edges[i][1] === v) return true;
+        }
+        return false;
+    };
+    while (nrOfAdditionalConnections !== 0) {
+        const u = vertices[Math.floor(Math.random() * vertices.length)];
+        const v = vertices[Math.floor(Math.random() * vertices.length)];
+        if (edges.length === 0) {
+            gDijkstra.addEdge(new Edge(u, v, randomNumber()));
+            gFloyd.addEdge(new Edge(u, v, randomNumber(), true));
+            edges.push([u, v]);
+            nrOfAdditionalConnections--;
+        } else {
+            if (!edgeExists(u, v)) {
+                gDijkstra.addEdge(new Edge(u, v, randomNumber()));
+                gFloyd.addEdge(new Edge(u, v, randomNumber(), true));
+                edges.push([u, v]);
+                nrOfAdditionalConnections--;
+            }
+        }
+    }
+    const floydTime = gFloyd.floyd();
+    console.log('floyd time: ', floydTime);
+    const dijkstraTime = gDijkstra.dijkstra();
+    console.log('dijkstra time: ', dijkstraTime);
+    // console.log('edges: ');
+    // console.table(gDijkstra.edges)
+    // console.log('nodes: ');
+    // console.table(gDijkstra.nodes)
+    // console.log('floyd table')
+    // console.table(gFloyd.nodes)
+    // console.table(gFloyd.edges)
+    return { floydTime, dijkstraTime };
+};
+
+
+const run = (vs, es) => {
+    const floydPerf = [];
+    const dijkstraPerf = [];
+    for (let i = 0; i < vs.length; i++) {
+        console.log('\n********************');
+        console.log('running for: ', vs[i], 'edges: ', es[i]);
+        const { floydTime, dijkstraTime } = makeGraph(vs[i], es[i]);
+        floydPerf.push(floydTime);
+        dijkstraPerf.push(dijkstraTime);
+        console.log('********************');
+    }
+
+    const floydPlot = { x: vs, y: floydPerf, type: 'line', name: 'floyd execution time' };
+    const dijkstraPlot = { x: vs, y: dijkstraPerf, type: 'line', name: 'dijkstra execution time' };
+    plot([floydPlot, dijkstraPlot]);
+};
+
+
+const nrOfVertices = [10, 50, 100, 500, 1000];
+const nrOfAdditionalConnections = [10, 50, 100, 1000, 2000];
+run(nrOfVertices, nrOfAdditionalConnections);
+
+// let g = new Graph();
 
 // Floyd graph example from: https://www.youtube.com/watch?v=oNI0rf2P9gE&t=319s
-g.addNode(0);
-g.addNode(1);
-g.addNode(2);
-g.addNode(3);
-
-g.addEdge(new Edge(0, 1, 3));
-g.addEdge(new Edge(1, 0, 8));
-g.addEdge(new Edge(1, 2, 2));
-g.addEdge(new Edge(2, 0, 5));
-g.addEdge(new Edge(2, 3, 1));
-g.addEdge(new Edge(3, 0, 2));
-g.addEdge(new Edge(0, 3, 7));
+// g.addNode(0);
+// g.addNode(1);
+// g.addNode(2);
+// g.addNode(3);
+//
+// g.addEdge(new Edge(0, 1, 3));
+// g.addEdge(new Edge(1, 0, 8));
+// g.addEdge(new Edge(1, 2, 2));
+// g.addEdge(new Edge(2, 0, 5));
+// g.addEdge(new Edge(2, 3, 1));
+// g.addEdge(new Edge(3, 0, 2));
+// g.addEdge(new Edge(0, 3, 7));
 
 // Dijkstra graph example here: https://www.youtube.com/watch?v=pVfj6mxhdMw
 // !Note - can not run floyd on this one as it's nodes are string
@@ -220,8 +315,8 @@ g.addEdge(new Edge(0, 3, 7));
 
 // console.log({Nodes: g.nodes, Edges: g.edges})
 
-const dijkstraTime = g.dijkstra()
-const floydTime = g.floyd()
-console.log({floydTime, dijkstraTime})
+// const dijkstraTime = g.dijkstra()
+// const floydTime = g.floyd()
+// console.log({floydTime, dijkstraTime})
 
 
