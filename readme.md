@@ -1,4 +1,4 @@
-# **Laboratory works for CC**
+# **Calculability and Complexity**
 
 > Pasecinic Nichita
 >
@@ -6,15 +6,15 @@
 >
 > Teacher - Mihai Gaidau
 
-#### **Lab 1 - Fibonacci sequence + empirical analysis**
+#### **Fibonacci sequence + empirical analysis**
 
-#### **Lab 2 - Sorting algorithm + empirical analysis**
+#### *Sorting algorithm + empirical analysis**
 
 *Plot example (more plots and more detailed description available in report!)*
 
 ![image](https://user-images.githubusercontent.com/57563506/108593076-48d42880-737a-11eb-8a19-8b9a5d9937e0.png)
 
-####  **Lab 3 Empirical analysis of algorithms for obtaining Eratosthenes Sieve.**
+####  **Empirical analysis of algorithms for obtaining Eratosthenes Sieve.**
 
 > (27.02.21)
 
@@ -22,7 +22,7 @@
 
 ![image](https://user-images.githubusercontent.com/57563506/109389423-35463600-7915-11eb-8da4-e36e5655bda4.png)
 
-####  **Lab 4 Empirical analysis of Depth First Search and Breadth First Search algorithms.**
+####  **Empirical analysis of Depth First Search and Breadth First Search algorithms.**
 
 > (25.03.21)
 
@@ -30,7 +30,7 @@
 
 ![image](https://user-images.githubusercontent.com/57563506/112725843-eb0ba100-8f22-11eb-9c48-e55d7d1fcdb5.png)
 
-#### **Lab 5 Compute π to nth digit**
+#### **Compute π to nth digit**
 
 > (03.04.21)
 
@@ -47,7 +47,7 @@ Calculus Formulas:
 
 ![image](https://user-images.githubusercontent.com/57563506/113478355-0b8eaa80-9491-11eb-8526-7d8cea06e03c.png)
 
-#### **Lab 6 Kruskal's and Prim's algorithm**
+#### **Kruskal's and Prim's algorithm**
 
 > (04.08.21)
 
